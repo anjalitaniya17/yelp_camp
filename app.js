@@ -13,7 +13,10 @@ const flash=require("connect-flash");
 app.locals.moment = require('moment');
 
 //seedDB();  //seed the database
-mongoose.connect("mongodb://localhost:27017/yelp_camp");
+// mongoose.connect("mongodb://localhost:27017/yelp_camp");
+mongoose.connect("mongodb://anjali:nisha17@ds027483.mlab.com:27483/yelp_camp");
+
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(flash());
 
