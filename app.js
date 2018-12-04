@@ -16,7 +16,7 @@ app.locals.moment = require('moment');
 // mongoose.connect("mongodb://localhost:27017/yelp_camp");
 mongoose.connect("mongodb://anjali:nisha17@ds027483.mlab.com:27483/yelp_camp");
 
-
+console.log("hello world");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(flash());
 
