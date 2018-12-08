@@ -15,18 +15,38 @@
         
 
 <p>  <a class="btn btn-primary  btn-sm" href="/campgrounds/new">Add new campground</a></p>
-    </div>
-    </header>
 
+<!--for fuzzy search -->
+<p>
+     <form action="/campgrounds"  method="GET" class="form-inline">
+        <div class="form-group">
+        <input type="text" name="search" placeholder="campground search..." class="form-control">
+        <input type="submit" value="search" class=" inputUserName btn btn-default ">
+        
+        </div>
+    </form>
+    
+    
+</p>
+    </div>
+    
+    </header>
+   <%  var noMatch; %>
 <div class="row text-center text-lg-left " style="display:flex; flex-wrap:wrap; ">
+ <p>
+  <%  if(noMatch!==undefined){  %>
+         <h5> "<%=  noMatch   %>"</h5>
+  <%  } %>
+  </p>
    <% campgrounds.forEach(function(campground){ %>
 
 <div class=" col-md-3 col-sm-6">
-      <div class="rounded">
+      <div class="rounded img-thumbnail">
      <img class="img-thumbnail" src= "<%=campground.image%>" > 
     <h4> <%=campground.name%></ h4>
-    <p><a class="btn btn-sm btn-primary" href="/campgrounds/<%= campground._id %>">More Info</a></p>
-      
+    <center>
+    <p><a class="btn btn-sm btn-primary float" href="/campgrounds/<%= campground._id %>">More Info</a></p></center>
+    
 </div>
 </div>
 <% }); %>
