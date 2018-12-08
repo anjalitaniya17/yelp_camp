@@ -3,22 +3,47 @@ var router=express.Router();
 var Campgorund=require("../models/campground");
 var middleware=require("../middleware");
 
-
+var noMatch;
 //campground routes 
 
 
 //index route
 router.get("/",function(req,res){
-   
+   // if there is any value in input search then it will show those campgrounds which mathes the fuzzy value 
+    if(req.query.search)
+    {
+         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+          Campgorund.find({name:regex},function(err,allcampgrounds){
+               if(err){
+                           console.log("something went wrong with campgroung retriving");
+                      }
+                else  {
+                        
+                        if(allcampgrounds.length==0)
+                        {
+                            noMatch="There is no campground matched to your query, Please try again";
+                            res.render("campgrounds/index",{campgrounds:allcampgrounds, currentUser:req.user,noMatch:noMatch});
+                        }
+                        else
+                        {
+                             res.render("campgrounds/index",{campgrounds:allcampgrounds, currentUser:req.user});
+                        }
+                         
+                      }
+            });
+    }
+    //if there is no value then it will show all campgrounds 
+    else
+    {
     Campgorund.find({},function(err,allcampgrounds){
         if(err){
                            console.log("something went wrong with campgroung retriving");
                        }
                        else{
-                          res.render("campgrounds/index",{campgrounds:allcampgrounds, currentUser:req.user});
+                        res.render("campgrounds/index",{campgrounds:allcampgrounds, currentUser:req.user});
                        }
     });
-    
+    }
     });
     
 //new --campground form route
@@ -30,7 +55,7 @@ router.get("/new",middleware.isLoggedin,function(req, res) {
 router.post("/",middleware.isLoggedin,function(req,res){
    var name=  req.body.name;
    var price=req.body.price;
-    console.log(price);
+    
     var image= req.body.image;
     var desc=req.body.description;
     
@@ -47,7 +72,7 @@ router.post("/",middleware.isLoggedin,function(req,res){
                                 
                                 console.log("something went wrong with camground creation" + err);
                             } else{
-                                  console.log(newcreated);
+                                  
                                   res.redirect("/campgrounds");
                             }
                         });
@@ -100,8 +125,10 @@ router.delete("/:id",middleware.checkOwnership,function(req,res){
    });
 });
 
-     
-
+ //function for searching query values in DB    
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 
