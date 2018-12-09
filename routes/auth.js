@@ -111,8 +111,8 @@ router.post("/forgot",(req,res)=>{
         done(err, 'done');
       });
     }
-  ], function(err,next) {
-    if (err){ return next(err);}
+  ], function(err) {
+    if (err){ return err;}
     res.redirect('/forgot');
   });
 });
