@@ -7,8 +7,12 @@ var mongoose=require("mongoose");
 var passport=require("passport");
 var LocalStrategy=require("passport-local");
 var MethodOverride=require("method-override");
-const flash=require("connect-flash");
+var flash=require("connect-flash");
 
+//for password reset'
+var async=require("async");
+var nodemailer=require("nodemailer");
+var crypto=require("crypto");
 //require moment
 app.locals.moment = require('moment');
 
