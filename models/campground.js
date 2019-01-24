@@ -1,4 +1,4 @@
-//schema set up
+ //schema set up
 var mongoose=require("mongoose");
 
 
@@ -7,6 +7,8 @@ var campgroundSchema=new mongoose.Schema({
     price:Number,
     image:String,
     description:String,
+    address:String,
+    
     author: { id:{
                     type: mongoose.Schema.Types.ObjectId,
                     ref:"User"

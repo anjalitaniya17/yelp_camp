@@ -3,9 +3,41 @@ var router=express.Router();
 var Campgorund=require("../models/campground");
 var middleware=require("../middleware");
 
+//To get longitude and lattitude from address
+var NodeGeocoder = require('node-geocoder');
+
+var options = {
+    provider: 'google',
+   
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    apiKey: 'AIzaSyDqPZxGV6POXCk20Rf7BuTeex92YzEhVgs', // for Mapquest, OpenCage, Google Premier
+    formatter: null         // 'gpx', 'string', ...
+  };
+
+  var geocoder = NodeGeocoder(options);
+
+//  var intilizePromise=geocoder.geocode('montreal');
+
+//    var result=intilizePromise.then(function(res)
+//          {
+//               console.log(res);
+//              return res;         
+//          });
+var latitude=0;
+var longitude=0;
+
+
+
+
+
+
+
+
+
+
 var noMatch;
 //campground routes 
-
 
 //index route
 router.get("/",function(req,res){
@@ -40,6 +72,7 @@ router.get("/",function(req,res){
                            console.log("something went wrong with campgroung retriving");
                        }
                        else{
+                        // allcampgrounds.forEach(campground=>console.log(campground.address));
                         res.render("campgrounds/index",{campgrounds:allcampgrounds, currentUser:req.user});
                        }
     });
@@ -55,24 +88,24 @@ router.get("/new",middleware.isLoggedin,function(req, res) {
 router.post("/",middleware.isLoggedin,function(req,res){
    var name=  req.body.name;
    var price=req.body.price;
-    
-    var image= req.body.image;
+   var image= req.body.image;
     var desc=req.body.description;
+    var address=req.body.address;
+    console.log(address);
     
     var author={
                    id:req.user._id,
                   username:req.user.username
     };
     
-    var newcampgrounds={name:name,price:price,image:image,description:desc,author:author};
-    
+    var newcampgrounds={name:name,price:price,image:image,description:desc,address:address,author:author};
     Campgorund.create(newcampgrounds,
                         function(err,newcreated){
                             if(err){
                                 
                                 console.log("something went wrong with camground creation" + err);
                             } else{
-                                  
+                                  console.log(newcreated);
                                   res.redirect("/campgrounds");
                             }
                         });
@@ -89,11 +122,26 @@ router.get("/:id" , function(req, res){
              console.log("error from finding campground" + err);
          }
          else{
-             
-             res.render("campgrounds/show",{campground:foundCampground});
-         }
-     });
-     });
+            var result=new Promise((resolve,reject)=>{
+                
+             geocoder.geocode(foundCampground.address, function(err, res) {
+                    if(err){
+                       reject(err);
+                    }
+                      else{
+                         
+                        resolve(res);
+                      }
+                });
+            });
+
+            result.then((response)=>{
+                
+                res.render("campgrounds/show",{campground:foundCampground,res:response});
+            });
+        }
+    });
+});
      
 //edit campground route
 router.get("/:id/edit", middleware.checkOwnership, function(req, res){

@@ -88,11 +88,15 @@ router.post("/forgot",(req,res)=>{
       });
     },
     function(token, user, done) {
+        
       var smtpTransport = nodemailer.createTransport( {
+          host: 'smtp.gmail.com',
+           port: 465,
+        secure: true,
         service: 'Gmail',
         auth: {
           user: 'yelpcamptrial17@gmail.com',
-          pass: process.env.EMAILPASSWORD
+          pass: process.env.EMAILPASSWORD 
           
         }
       });

@@ -17,10 +17,10 @@ var crypto=require("crypto");
 app.locals.moment = require('moment');
 
 //seedDB();  //seed the database
-// mongoose.connect("mongodb://localhost:27017/yelp_camp");
-mongoose.connect("mongodb://anjali:nisha17@ds027483.mlab.com:27483/yelp_camp");
+ mongoose.connect("mongodb://localhost:27017/yelp_camp1");
+//mongoose.connect("mongodb://anjali:nisha17@ds027483.mlab.com:27483/yelp_camp");
 
-
+console.log(process.env.EMAILPASSWORD);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(flash());
 
@@ -64,6 +64,6 @@ app.use("/campgrounds",campgroundroutes);
 app.use("/campgrounds/:id/comments",commentroutes);
 
 
-app.listen(process.env.PORT,process.env.IP,function(){
+app.listen(3001,function(){
     console.log("yelp camp server has started");
 })
