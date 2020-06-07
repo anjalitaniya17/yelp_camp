@@ -17,26 +17,11 @@ var options = {
 
   var geocoder = NodeGeocoder(options);
 
-//  var intilizePromise=geocoder.geocode('montreal');
 
-//    var result=intilizePromise.then(function(res)
-//          {
-//               console.log(res);
-//              return res;         
-//          });
 var latitude=0;
 var longitude=0;
-
-
-
-
-
-
-
-
-
-
 var noMatch;
+
 //campground routes 
 
 //index route
@@ -91,7 +76,6 @@ router.post("/",middleware.isLoggedin,function(req,res){
    var image= req.body.image;
     var desc=req.body.description;
     var address=req.body.address;
-    console.log(address);
     
     var author={
                    id:req.user._id,
@@ -105,14 +89,12 @@ router.post("/",middleware.isLoggedin,function(req,res){
                                 
                                 console.log("something went wrong with camground creation" + err);
                             } else{
-                                  console.log(newcreated);
+                                  
                                   res.redirect("/campgrounds");
                             }
                         });
   
 });
-
-
 
 //show route
 router.get("/:id" , function(req, res){
@@ -122,23 +104,24 @@ router.get("/:id" , function(req, res){
              console.log("error from finding campground" + err);
          }
          else{
-            var result=new Promise((resolve,reject)=>{
+            res.render("campgrounds/show",{campground:foundCampground});
+            // var result=new Promise((resolve,reject)=>{
                 
-             geocoder.geocode(foundCampground.address, function(err, res) {
-                    if(err){
-                       reject(err);
-                    }
-                      else{
+            //  geocoder.geocode(foundCampground.address, function(err, res) {
+            //         if(err){
+            //            reject(err);
+            //         }
+            //           else{
                          
-                        resolve(res);
-                      }
-                });
-            });
+            //             resolve(res);
+            //           }
+            //     });
+            // });
 
-            result.then((response)=>{
+            // result.then((response)=>{
                 
-                res.render("campgrounds/show",{campground:foundCampground,res:response});
-            });
+            //     res.render("campgrounds/show",{campground:foundCampground,res:response});
+            // });
         }
     });
 });
@@ -177,12 +160,6 @@ router.delete("/:id",middleware.checkOwnership,function(req,res){
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
-
-
-
-
-
-
 
 module.exports=router;
 
