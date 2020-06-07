@@ -1,12 +1,23 @@
 <div class="container">
 <% include ../partials/header %>
-<style>
-    
-       {
+ <style>
+    {
           font-size:16;
-       }
-       
-       </style>
+    }
+    .block {
+       margin-bottom:10px;
+    }
+    .img-height {
+      height:170px;
+      width:251px;
+    }
+    .text {
+       height: 60px;
+       display: flex;
+       flex-direction: column;
+     }
+
+   </style>
       
       <header class="jumbotron">
        <div class="container">
@@ -38,18 +49,23 @@
          <h5> "<%=  noMatch   %>"</h5>
   <%  } %>
   </p>
-   <% campgrounds.forEach(function(campground){ %>
+ <% campgrounds.forEach(function(campground){ %>
 
-<div class=" col-md-3 col-sm-6">
-      <div class="rounded img-thumbnail">
-     <img class="img-thumbnail" src= "<%=campground.image%>" > 
-    <h4 class="text-center"> <%=campground.name%></ h4>
-    <center>
-    <p><a class="btn btn-sm btn-primary float" href="/campgrounds/<%= campground._id %>">More Info</a></p></center>
-    
-</div>
-</div>
-<% }); %>
+   <div class=" col-md-3 col-sm-6 block">
+      <div class="rounded img-thumbnail"> 
+       <img class="img-thumbnail img-height" src= "<%=campground.image%>" > 
+       <div class = "text">
+         <span class="text-center"> 
+           <%=campground.name%>
+         </span>
+         <span class="text-center">  
+            <a class="btn btn-sm btn-primary float" href="/campgrounds/<%= campground._id %>">More Info</a>
+         </span>
+       </div>
+      
+      </div> 
+   </div>
+ <% }); %>
 
     
 </div>
