@@ -20,7 +20,7 @@ app.locals.moment = require('moment');
  mongoose.connect("mongodb://localhost:27017/yelp_camp1");
 //mongoose.connect("mongodb://anjali:nisha17@ds027483.mlab.com:27483/yelp_camp");
 
-console.log(process.env.EMAILPASSWORD);
+//console.log(process.env.EMAILPASSWORD);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(flash());
 
@@ -37,6 +37,8 @@ app.use(MethodOverride("_method"));
 var commentroutes=require("./routes/comments");
 var campgroundroutes=require("./routes/campground");
 var indexroutes=require("./routes/auth");
+
+
 
 //passport configuration
 app.use(require("express-session")({
@@ -64,6 +66,6 @@ app.use("/campgrounds",campgroundroutes);
 app.use("/campgrounds/:id/comments",commentroutes);
 
 
-app.listen(3001,function(){
+app.listen(3000,function(){
     console.log("yelp camp server has started");
 })
