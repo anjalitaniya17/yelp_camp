@@ -2,6 +2,7 @@ var express=require("express");
 var app=express();
 var bodyParser=require("body-parser");
 var mongoose=require("mongoose");
+require('dotenv').config();
 
 //var seedDB=require("./seeds");
 var passport=require("passport");
@@ -20,7 +21,6 @@ app.locals.moment = require('moment');
  mongoose.connect("mongodb://localhost:27017/yelp_camp1");
 //mongoose.connect("mongodb://anjali:nisha17@ds027483.mlab.com:27483/yelp_camp");
 
-//console.log(process.env.EMAILPASSWORD);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(flash());
 
