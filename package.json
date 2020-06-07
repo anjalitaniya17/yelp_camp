@@ -20,7 +20,7 @@
     "method-override": "^3.0.0",
     "moment": "^2.22.2",
     "mongodb": "^3.1.8",
-    "mongoose": "^5.1.7",
+    "mongoose": "^5.7.5",
     "node-geocoder": "^3.22.0",
     "nodemailer": "^4.7.0",
     "passport": "^0.4.0",
