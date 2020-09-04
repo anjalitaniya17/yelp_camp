@@ -20,7 +20,7 @@
     "locus": "^2.0.1",
     "method-override": "^3.0.0",
     "moment": "^2.22.2",
-    "mongodb": "^3.1.8",
+    "mongodb": "^3.1.13",
     "mongoose": "^5.1.7",
     "node-geocoder": "^3.22.0",
     "nodemailer": "^4.7.0",
